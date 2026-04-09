@@ -1,3 +1,9 @@
+`include "hdl/instruction_decoder.sv"
+`include "hdl/register_file.sv"
+`include "hdl/ALU.sv"
+`include "hdl/FPU.sv"
+`include "hdl/memory.sv"
+
 module tinker_core (
     input clk,
     input reset,
