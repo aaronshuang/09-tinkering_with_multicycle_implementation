@@ -1,7 +1,7 @@
 module tinker_core (
     input clk,
     input reset,
-    output logic halt
+    output logic hlt
 );
     // --- FSM States ---
     localparam FETCH = 3'd0, DECODE = 3'd1, EXEC = 3'd2, MEM = 3'd3, WB = 3'd4;
@@ -124,7 +124,7 @@ module tinker_core (
 
                     if (opcode == 5'h0f && imm == 12'b0) begin
                         $display("Execution Halted.");
-                        halt = 1'b1;
+                        hlt = 1'b1;
                         // $finish; 
                     end else if (is_branch && opcode != 5'h0d) begin 
                         // Resolve Branches (except Return, which needs memory)
