@@ -4,3 +4,5 @@ This is a verilog implementation of a multi-cycled CPU core. It includes memory,
 
 ## Execution Guide
 Run ```vvp test1```
+Run ```vvp tinker.vvp```
+Run ```vvp test2.vvp```

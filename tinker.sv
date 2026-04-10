@@ -28,7 +28,7 @@ module tinker_core (
     wire use_immediate, use_fpu_instruction, is_branch;
 
     instruction_decoder decoder (
-        .instruction(IR), // Feeds from the latched Pipeline Register, not memory directly
+        .instruction(IR),
         .opcode(opcode), .rd(rd), .rs(rs), .rt(rt), .imm(imm),
         .use_immediate(use_immediate), .use_fpu_instruction(use_fpu_instruction),
         .is_branch(is_branch)
@@ -51,12 +51,11 @@ module tinker_core (
         .r31_val(r31_val)
     );
 
-    // --- ALU / FPU MUX Routing ---
+    // --- ALU / FPU Routing ---
     wire uses_rd_as_a = (opcode == 5'h13) || (opcode == 5'h19) || 
                         (opcode == 5'h1b) || (opcode == 5'h05) || 
                         (opcode == 5'h07) || (opcode == 5'h12);
     
-    // Feed ALU from the Pipeline Registers (A, B, RD_LATCH), not the Register File directly
     wire [63:0] alu_input_a = uses_rd_as_a ? RD_LATCH : A;
     wire [63:0] alu_input_b = (use_immediate) ? 
         ((opcode == 5'h19 || opcode == 5'h1b) ? {52'b0, imm} : {{52{imm[11]}}, imm}) : B;
@@ -101,7 +100,7 @@ module tinker_core (
         end
     end
 
-    // FSM Controller
+    // FSM
     always @(posedge clk) begin
         if (reset) begin
             state <= FETCH;
